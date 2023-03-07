@@ -23,7 +23,7 @@ const ensureTokenIsValidMiddleware = (
 
         req.user = {
             id: Number(decoded.sub),
-            birthDate: decoded.birthDate,
+            admin: decoded.admin,
         };
 
         return next();
