@@ -1,27 +1,31 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import { Repository } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { User } from "../entities";
 import { AppError } from "../errors";
 
-const ensureUserExistsMiddleware = async (
+const ensureEmailIsUniqueMiddleware = async (
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<void> => {
     const userRepository: Repository<User> = AppDataSource.getRepository(User);
 
-    const findUser = await userRepository.findOne({
+    if (!req.body.email) {
+        return next();
+    }
+
+    const findUser: User | null = await userRepository.findOne({
         where: {
-            id: Number(req.params.id),
+            email: req.body.email,
         },
     });
 
-    if (!findUser) {
-        throw new AppError("User not found", 404);
+    if (findUser) {
+        throw new AppError("Email already exists", 404);
     }
 
     return next();
 };
 
-export default ensureUserExistsMiddleware;
+export default ensureEmailIsUniqueMiddleware;

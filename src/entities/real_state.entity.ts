@@ -37,11 +37,13 @@ class RealEstate {
     @JoinColumn()
     address: Address;
 
-    @ManyToOne(() => Category, { nullable: true })
+    @ManyToOne(() => Category, (category) => category.realEstate, {
+        nullable: true,
+    })
     category: Category;
 
     @OneToMany(() => Schedule, (schedule) => schedule.realEstate)
-    users: Schedule[];
+    schedules: Schedule[];
 }
 
 export { RealEstate };
