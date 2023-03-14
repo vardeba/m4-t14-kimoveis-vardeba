@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { ISchedule } from "../interfaces/schedules.interfaces";
 import createScheduleService from "../services/schedules/createSchedule.service";
 import listScheduleByRealEstateIdService from "../services/schedules/listSchedulesByRealEstateId.service";
-// import listScheduleByRealEstateIdService from "../services/schedules/listSchedulesByRealEstateId.service";
 
 const createScheduleController = async (
     req: Request,

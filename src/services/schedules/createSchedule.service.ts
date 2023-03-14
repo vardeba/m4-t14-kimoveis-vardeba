@@ -3,7 +3,6 @@ import { AppDataSource } from "../../data-source";
 import { RealEstate, Schedule, User } from "../../entities";
 import { AppError } from "../../errors";
 import { ISchedule } from "../../interfaces/schedules.interfaces";
-import { returnScheduleSchema } from "../../schemas/schedules.schemas";
 
 const createScheduleService = async (
     scheduleData: ISchedule,

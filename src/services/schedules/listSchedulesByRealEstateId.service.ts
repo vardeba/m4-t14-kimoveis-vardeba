@@ -1,13 +1,9 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
-import { RealEstate, Schedule } from "../../entities";
+import { RealEstate } from "../../entities";
 import { AppError } from "../../errors";
-import { ISchedulesReturn } from "../../interfaces/schedules.interfaces";
 
 const listScheduleByRealEstateIdService = async (realEstateId: number) => {
-    const scheduleRepository: Repository<Schedule> =
-        AppDataSource.getRepository(Schedule);
-
     const realEstateRepository: Repository<RealEstate> =
         AppDataSource.getRepository(RealEstate);
 
