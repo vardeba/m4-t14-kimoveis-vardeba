@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { ISchedule } from "../interfaces/schedules.interfaces";
 import createScheduleService from "../services/schedules/createSchedule.service";
+import listScheduleByRealEstateIdService from "../services/schedules/listSchedulesByRealEstateId.service";
 // import listScheduleByRealEstateIdService from "../services/schedules/listSchedulesByRealEstateId.service";
 
 const createScheduleController = async (
@@ -11,9 +12,11 @@ const createScheduleController = async (
 
     const userId: number = req.user.id;
 
-    const newSchedule = await createScheduleService(scheduleData, userId);
+    await createScheduleService(scheduleData, userId);
 
-    return res.status(201).json(newSchedule);
+    return res.status(201).json({
+        message: "Schedule created",
+    });
 };
 
 const listSchedulesByRealEstateIdController = async (
@@ -22,9 +25,9 @@ const listSchedulesByRealEstateIdController = async (
 ): Promise<Response> => {
     const realEstateId: number = parseInt(req.params.id);
 
-    // const scheduleList = await listScheduleByRealEstateIdService(realEstateId);
+    const scheduleList = await listScheduleByRealEstateIdService(realEstateId);
 
-    return res.status(201).json();
+    return res.status(200).json(scheduleList);
 };
 
 export { createScheduleController, listSchedulesByRealEstateIdController };

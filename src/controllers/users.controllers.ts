@@ -31,7 +31,9 @@ const deleteUserController = async (
 ): Promise<Response> => {
     const userId: number = parseInt(req.params.id);
 
-    await deleteUserService(userId);
+    const loggedUserId: number = req.user.id;
+
+    await deleteUserService(userId, loggedUserId);
 
     return res.status(204).send();
 };
@@ -44,7 +46,16 @@ const updateUserController = async (
 
     const userId: number = parseInt(req.params.id);
 
-    const updatedUser = await updateUserService(userData, userId);
+    const loggedUserAdmin: boolean = req.user.admin;
+
+    const loggedUserId: number = req.user.id;
+
+    const updatedUser = await updateUserService(
+        userData,
+        userId,
+        loggedUserAdmin,
+        loggedUserId
+    );
 
     return res.json(updatedUser);
 };

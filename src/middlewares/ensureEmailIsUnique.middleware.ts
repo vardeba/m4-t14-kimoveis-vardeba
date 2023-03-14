@@ -22,7 +22,7 @@ const ensureEmailIsUniqueMiddleware = async (
     });
 
     if (findUser) {
-        throw new AppError("Email already exists", 404);
+        throw new AppError("Email already exists", 409);
     }
 
     return next();

@@ -4,34 +4,31 @@ import { RealEstate, Schedule } from "../../entities";
 import { AppError } from "../../errors";
 import { ISchedulesReturn } from "../../interfaces/schedules.interfaces";
 
-// const listScheduleByRealEstateIdService = async (
-//     realEstateId: number
-// ): Promise<ISchedulesReturn> => {
-//     const scheduleRepository: Repository<Schedule> =
-//         AppDataSource.getRepository(Schedule);
+const listScheduleByRealEstateIdService = async (realEstateId: number) => {
+    const scheduleRepository: Repository<Schedule> =
+        AppDataSource.getRepository(Schedule);
 
-//     const realEstateRepository: Repository<RealEstate> =
-//         AppDataSource.getRepository(RealEstate);
+    const realEstateRepository: Repository<RealEstate> =
+        AppDataSource.getRepository(RealEstate);
 
-//     const realEstate: RealEstate | null = await realEstateRepository.findOneBy({
-//         id: realEstateId,
-//     });
+    const realEstate: RealEstate | null = await realEstateRepository.findOne({
+        where: {
+            id: realEstateId,
+        },
+        relations: {
+            address: true,
+            category: true,
+            schedules: {
+                user: true,
+            },
+        },
+    });
 
-//     if (!realEstate) {
-//         throw new AppError("RealEstate not found", 404);
-//     }
+    if (!realEstate) {
+        throw new AppError("RealEstate not found", 404);
+    }
 
-//     const findSchedules = await scheduleRepository.find({
-//         // relations: {
-//         //     realEstate: true,
-//         // },
-//     });
+    return realEstate;
+};
 
-//     if (!findSchedules) {
-//         throw new AppError("No schedules found", 404);
-//     }
-
-//     return findSchedules;
-// };
-
-// export default listScheduleByRealEstateIdService;
+export default listScheduleByRealEstateIdService;

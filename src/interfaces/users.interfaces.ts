@@ -2,7 +2,6 @@ import {
     createUserSchema,
     returnMultipleUsersSchema,
     returnUserSchema,
-    updateUserSchema,
 } from "../schemas/users.schemas";
 
 import { z } from "zod";

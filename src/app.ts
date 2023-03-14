@@ -17,7 +17,7 @@ app.use("/login", loginRoutes);
 
 app.use("/categories", categoriesRoutes);
 
-app.use("/realEstates", realEstateRoutes);
+app.use("/realEstate", realEstateRoutes);
 
 app.use("/schedules", schedulesRoutes);
 

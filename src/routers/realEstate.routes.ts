@@ -12,9 +12,9 @@ const realEstateRoutes: Router = Router();
 
 realEstateRoutes.post(
     "",
+    ensureDataIsValidMiddleware(createRealEstateSchema),
     ensureTokenIsValidMiddleware,
     ensureUserIsAdminMiddleware,
-    ensureDataIsValidMiddleware(createRealEstateSchema),
     createRealEstateController
 );
 realEstateRoutes.get("", listRealEstatesController);

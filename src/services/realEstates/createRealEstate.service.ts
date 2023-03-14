@@ -1,10 +1,8 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import { Address, Category, RealEstate } from "../../entities";
-import {
-    IRealEstate,
-    IRealEstateReturn,
-} from "../../interfaces/realEstates.interfaces";
+import { AppError } from "../../errors";
+import { IRealEstate } from "../../interfaces/realEstates.interfaces";
 
 const createRealEstateService = async (
     realEstateData: IRealEstate
@@ -21,6 +19,15 @@ const createRealEstateService = async (
     const category = await categoryRepository.findOneBy({
         id: realEstateData.categoryId!,
     });
+
+    const findAddress: Address | null = await addressRepository.findOneBy({
+        street: realEstateData.address.street,
+        number: realEstateData.address.number!,
+    });
+
+    if (findAddress) {
+        throw new AppError("Address already exists", 409);
+    }
 
     const newAddress: Address = addressRepository.create({
         ...realEstateData.address,
